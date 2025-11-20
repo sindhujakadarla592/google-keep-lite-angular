@@ -24,7 +24,7 @@
         <div *ngIf="filteredNotes.length === 0" class="empty">No notes found</div>
       </div>
     </section>
-
+    <!-- todo  -->
     <section class="panel todos-panel">
       <h2>To-Do Lists</h2>
       <div class="add">
@@ -47,18 +47,46 @@
 
       <div class="grid">
         <div class="todo-card" *ngFor="let td of filteredTodos">
-          <h3>{{ td.title }}</h3>
-          <ul class="tasks">
-            <li *ngFor="let tk of td.tasks">
-              <label>
-                <input type="checkbox" [checked]="tk.done" (change)="toggleTask(td, tk)" />
-                <span [class.done]="tk.done">{{ tk.text }}</span>
-              </label>
-            </li>
-          </ul>
-          <div *ngIf="td.tasks.length === 0" class="empty">No tasks yet</div>
+
+          <div *ngIf="editingTodo == td; else viewMode">
+            <input [(ngModel)]="editTitle" placeholder="edit title" />
+            <ul class="tasks">
+              <li *ngFor="let tk of editingTasks; let i = index">
+                  <input type="checkbox" [checked]="tk.text" placeholder="Edit task" />
+                  <label>
+                    <input type="checkbox" [(ngModel)]="tk.done"/> Done
+                  </label>
+                  <button   (click)="removeEditTask(i)" > 
+                    X
+                  </button>
+              </li>
+            </ul>
+            <div> 
+
+            </div>
+            <input [(ngModel)]="newEditTask" placeholder="add new  task" />
+            <button (click)="addEditTask()"> add Task</button>
+          </div>
+
+          <button (click)="saveEdit()"> Save</button>
+          <button (click)="cancelEdit()"> Cancel</button>
+
+          <ng-template #viewMode>
+            <h3>{{ td.title }}</h3>
+            <ul class="tasks">
+              <li *ngFor="let tk of td.tasks">
+                <label>
+                  <input type="checkbox" [checked]="tk.done" (change)="toggleTask(td, tk)" />
+                  <span [class.done]="tk.done">{{ tk.text }}</span>
+                </label>
+              </li>
+            </ul>
+            <div *ngIf="td.tasks.length === 0" class="empty">No tasks yet</div>
+            <button (click)="startEdit(td)"> Edit</button>
+          </ng-template>
         </div>
         <div *ngIf="filteredTodos.length === 0" class="empty">No todos found</div>
+
       </div>
     </section>
   </div>

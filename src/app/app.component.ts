@@ -45,6 +45,11 @@ export class AppComponent {
   nextTodoId = this.todos.length + 1;
   nextTaskId = 1;
 
+  editingTodo: any = null;
+  editTitle: string = '';
+  editingTasks: any = [];
+  newEditTask: string = '';
+
   get filteredNotes(): Note[] {
     const q = this.search.trim().toLowerCase();
     if (!q) return this.notes;
@@ -99,4 +104,52 @@ export class AppComponent {
     const colors = ['c1', 'c2', 'c3', 'c4'];
     return colors[i % colors.length];
   }
+
+
+
+
+  startEdit(todo: any) {
+
+    this.editingTodo = todo;
+    this.editTitle = todo.title;
+
+    this.editingTasks = todo.tasks.map((t: any) => ({ ...t }));
+  }
+
+  addEditTask() {
+
+    if (this.newEditTask.trim()) {
+      this.editingTasks.push({
+        text: this.newEditTask.trim(), done: false
+      })
+    }
+  }
+  //to do checking
+
+  removeEditTask(idex: number ){
+    this.editingTasks.splice(idex,1);
+  }
+
+  saveEdit() {
+
+    if (this.editingTodo && this.editTitle.trim()) {
+      this.editingTodo.title = this.editTitle.trim();
+      this.editingTodo.tasks = this.editingTasks.map((t: any) => ({
+        text: t.text.trim(),
+        done: t.done
+      }))
+      this.cancelEdit()
+    }
+  }
+
+  cancelEdit() {
+    this.editingTodo = null;
+    this.editTitle = '';
+    this.editingTasks =[];
+    this.newEditTask ='';
+  }
+
+  // toggleTask(todo: any, task: any){
+  //   task.done = !task.done;
+  // }
 }
