@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class SampleComponent {
     message = "Hello Sindhuja! This is a new sample component.";
-     message1 = "Hello  Sindhuja! welcome.";
+     message2 = "Hello  Sindhuja! welcome.";
 
 }
