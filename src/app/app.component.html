@@ -12,7 +12,8 @@
       <h2>Notes</h2>
       <div class="add">
         <input [(ngModel)]="newNoteTitle" placeholder="Note title" />
-        <textarea [(ngModel)]="newNoteContent" placeholder="Note content"></textarea>
+        <textarea [(ngModel)]="newNoteContent" 
+        placeholder="Note content"></textarea>
         <button (click)="addNote()">Add Note</button>
       </div>
 
@@ -24,7 +25,7 @@
         <div *ngIf="filteredNotes.length === 0" class="empty">No notes found</div>
       </div>
     </section>
-    <!-- todo  -->
+
     <section class="panel todos-panel">
       <h2>To-Do Lists</h2>
       <div class="add">
@@ -91,4 +92,4 @@
     </section>
   </div>
 </div>
-<app-sample></app-sample>
+
